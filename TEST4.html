@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Effect Debug</title>
+    <style>
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+
+        #cursor {
+            animation: blink 0.6s steps(2) infinite;
+        }
+
+        #identity-file {
+            font-family: monospace;
+            font-size: 1.2em;
+            white-space: pre-wrap;
+            color: black;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="identity-file">
+        <span id="typed-text"></span>
+        <span id="cursor">|</span>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const text = "test test test test test test test"; // The text to be typed out
+            const typedText = document.getElementById("typed-text");
+            const cursor = document.getElementById("cursor");
+
+            // Ensure the elements exist
+            if (!typedText) {
+                console.error("Element #typed-text not found!");
+                return;
+            }
+
+            if (!cursor) {
+                console.error("Element #cursor not found!");
+                return;
+            }
+
+            let index = 0; // Track the position in the text
+
+            function typeEffect() {
+                if (index < text.length) {
+                    typedText.textContent += text[index]; // Add one character
+                    index++;
+                    setTimeout(typeEffect, 100); // Call the function again after 100ms
+                } else {
+                    cursor.style.display = "none"; // Hide the cursor when typing is done
+                }
+            }
+
+            // Start typing effect
+            typedText.textContent = ""; // Clear the span before typing
+            typeEffect();
+        });
+    </script>
+</body>
+</html>
